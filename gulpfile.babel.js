@@ -10,6 +10,7 @@ import gulp from 'gulp';
 import babelify from 'babelify';
 import browserify from 'browserify';
 import bsync from 'browser-sync';
+import vss from 'vinyl-source-stream'
 import nunjucks from 'gulp-nunjucks-render';
 import removeEmptyLines from 'gulp-remove-empty-lines';
 import prettify from 'gulp-jsbeautifier';
@@ -58,17 +59,17 @@ gulp.task('browserify', function(callback) {
       // Required watchify args
       cache: {}, packageCache: {}, fullPaths: false,
       // Specify the entry point of your app
-      entries: path.join(conf.paths.src, '/app/editor.js'),
+      entries: path.join(conf.paths.src, '/app/app.js'),
       // Add file extensions to make optional in your requires
       extensions: ['.js'],
       // Enable source maps!
       debug: true
     })
     .transform(babelify.configure({
-      presets: ['es2015', 'react']
+      presets: ['es2015', 'react', 'stage-1']
     }))
     .bundle()
-    .pipe(gulp.src('app.js'))
+    .pipe(vss('app.js'))
     .pipe(gulp.dest(conf.paths.dist))
 });
 
