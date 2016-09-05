@@ -53,7 +53,7 @@ gulp.task('build', () => {
 /**
  * Browserify task
  */
-gulp.task('browserify', function(callback) {
+gulp.task('build-app', function(callback) {
 
   return browserify({
       // Required watchify args
@@ -85,9 +85,14 @@ gulp.task('watch',function() {
   );
   // Watch for templates changes.
   gulp.watch(
-    path.join(conf.paths.src, '/templates/*.+(html)'),
+    path.join(conf.paths.src, '/templates/**/*.+(html|nj)'),
     ['build']
   );
+  // Watch for app changes.
+  gulp.watch(
+    path.join(conf.paths.src, '/app/**/*.js'),
+    ['build-app']
+  )
 });
 
 
@@ -102,15 +107,15 @@ gulp.task('server', () => {
     }
   });
   // Reload on updates to distribution code.
-    gulp.watch([
-        path.join(conf.paths.dist, '/')
-      ], (event) => {
-        bsync.reload(event.path);
-    });
+  gulp.watch([
+      path.join(conf.paths.dist, '/*.js')
+    ], (event) => {
+      bsync.reload(event.path);
+  });
 });
 
 gulp.task('serve', [
   'build',
-  'server',
-  'watch'
+  'watch',
+  'server'
 ]);

@@ -19,20 +19,21 @@
   <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Montserrat:400,700' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Lily+Script+One' rel='stylesheet' type='text/css'>
 
-  <script src="assets/javascripts/modernizr.foundation.js"></script>
+  {% block extrastyles %}{% endblock %}
+
 </head>
 <body>
   <div id="main-container">
     {% include 'partials/nav.html' %}
 
-    {% block content %}
-    {% endblock %}
+    {% block content %}{% endblock %}
 
     {% include 'partials/footer.html' %}
   </div>
 
   <!-- Included JS Files (Compressed) -->
   <script src="assets/javascripts/foundation.min.js"></script>
+  <script src="assets/javascripts/modernizr.foundation.js"></script>
 
   <!-- Initialize JS Plugins -->
   <script src="assets/javascripts/jquery.flexslider-min.js"></script>
@@ -40,8 +41,7 @@
   <script src="assets/javascripts/smooth-scroll.js"></script>
   <script src="assets/javascripts/scripts.js"></script>
 
-  {% block extrajs %}
-  {% endblock %}
+  {% block extrascripts %}{% endblock %}
 
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
