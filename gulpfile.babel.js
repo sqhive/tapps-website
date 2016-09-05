@@ -7,6 +7,8 @@ import fs from 'fs';
 import path from 'path';
 import gulp from 'gulp';
 
+import babelify from 'babelify';
+import browserify from 'browserify';
 import bsync from 'browser-sync';
 import nunjucks from 'gulp-nunjucks-render';
 import removeEmptyLines from 'gulp-remove-empty-lines';
@@ -30,11 +32,13 @@ var conf = {
 gulp.task('build', () => {
 
   return gulp.src(
-    path.join(conf.paths.src, '/*.+(html)')
+    path.join(conf.paths.src, '/templates/*.+(html)')
   )
   // Rendering the templates.
   .pipe(nunjucks({
-    path: [conf.paths.src]
+    path: [
+      path.join(conf.paths.src, '/templates/')
+    ]
   }))
   // Make output pretty.
   .pipe(removeEmptyLines())
@@ -46,17 +50,41 @@ gulp.task('build', () => {
 });
 
 /**
+ * Browserify task
+ */
+gulp.task('browserify', function(callback) {
+
+  return browserify({
+      // Required watchify args
+      cache: {}, packageCache: {}, fullPaths: false,
+      // Specify the entry point of your app
+      entries: path.join(conf.paths.src, '/app/editor.js'),
+      // Add file extensions to make optional in your requires
+      extensions: ['.js'],
+      // Enable source maps!
+      debug: true
+    })
+    .transform(babelify.configure({
+      presets: ['es2015', 'react']
+    }))
+    .bundle()
+    .pipe(gulp.src('app.js'))
+    .pipe(gulp.dest(conf.paths.dist))
+});
+
+
+/**
  * Watch task
  */
 gulp.task('watch',function() {
   // Watch for styles changes.
   gulp.watch(
-    path.join(conf.paths.src, "/css/**/*.scss"),
+    path.join(conf.paths.src, '/templates/css/**/*.scss'),
     ['build-css']
   );
   // Watch for templates changes.
   gulp.watch(
-    path.join(conf.paths.src, '/*.+(html)'),
+    path.join(conf.paths.src, '/templates/*.+(html)'),
     ['build']
   );
 });
