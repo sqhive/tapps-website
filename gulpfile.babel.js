@@ -30,7 +30,7 @@ var conf = {
 /**
  * Build task
  */
-gulp.task('build', () => {
+gulp.task('build-templates', () => {
 
   return gulp.src(
     path.join(conf.paths.src, '/templates/*.+(html)')
@@ -51,9 +51,9 @@ gulp.task('build', () => {
 });
 
 /**
- * Browserify task
+ * Build app task.
  */
-gulp.task('build-app', function(callback) {
+gulp.task('build-app', (callback) => {
 
   return browserify({
       // Required watchify args
@@ -73,11 +73,29 @@ gulp.task('build-app', function(callback) {
     .pipe(gulp.dest(conf.paths.dist))
 });
 
+/**
+ * Build examples
+ */
+gulp.task('build-examples', () => {
+  return gulp.src(
+    path.join(conf.paths.src + '/examples/*.tapp')
+  )
+  .pipe(gulp.dest(conf.paths.dist + '/examples/'))
+})
+
+/**
+ * Build tasks
+ */
+gulp.task('build', [
+  'build-app',
+  'build-templates',
+  'build-examples'
+])
 
 /**
  * Watch task
  */
-gulp.task('watch',function() {
+gulp.task('watch', () => {
   // Watch for styles changes.
   gulp.watch(
     path.join(conf.paths.src, '/templates/css/**/*.scss'),

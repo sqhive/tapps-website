@@ -11,15 +11,7 @@
 {% block content %}
     <div class="navbar-offset">&nbsp;</div>
     <section id="editor-panel">
-
-      <div class="mdl-grid" style="max-width: 85%;">
-        <div class="mdl-cell mdl-cell--8-col">
-          <div id="view"></div>
-        </div>
-        <div class="mdl-cell mdl-cell--4-col">
-          <div id="compiler"></div>
-        </div>
-      </div>
+      <div id="ide"></div>
     </section>
 
     <a id="gallery-scroll"></a>
@@ -61,68 +53,7 @@
           </p>
           <div class="green-btn" data-code="/examples/randomwalk.js.txt">Use code</div>
         </div>
-
-
       </div>
-
-      <!--//
-      <div class="mid-row">
-      <div class="row inner-section platform-row">
-
-
-      <div class="six columns flyLeft text-left">
-      <h2 class="text-left">Tablet</h2>
-      <div class="hr"></div>
-      <p class="text-left">
-      At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.
-    </p>
-    <div class="green-btn">View Demo</div>
-    <div class="blue-btn">Buy Now</div>
-  </div>
-
-  <div class="six columns flyRight text-center">
-  <div class="flexslider">
-  <ul class="slides">
-  <li>
-  <img alt="desktop" src="assets/images/pad.png" />
-</li>
-
-<li>
-<img alt="desktop" src="assets/images/pad.png" />
-</li>
-
-<li>
-<img alt="desktop" src="assets/images/pad.png" />
-</li>
-</ul>
-</div>
-</div>
-
-
-</div>
-</div>
-//-->
-<div class="mid-row">
-  <div class="row inner-section platform-row">
-
-
-
-    <div class="six columns flyLeft text-left">
-      <h2 class="text-left">The Gradulator</h2>
-      <div class="hr"></div>
-      <p class="text-left">
-        Inevitable part of our daily life: calculation. What's better than an app that helps you do it? Of course, a mathematician, but they only show up at night and are always hungry. We offer you the code to our Gradulator Tadapp which helps you calculate your grade for uni.
-      </p>
-      <div class="green-btn" data-code="/examples/randomwalk.js.txt">Use code</div>
-    </div>
-
-    <div class="six columns flyRight text-center">
-
-    </div>
-
-  </div>
-</div>
-
 </section>
 
 {% endblock %}
@@ -139,29 +70,14 @@
 <script src="app.js"></script>
 
 <script>
-
-var editor = ace.edit('editor');
-editor.setOptions({
-  maxLines: Infinity,
-  fontSize: "11pt"
-});
-editor.setTheme('ace/theme/chrome');
-editor.getSession().setMode('ace/mode/jsx');
-
-timeout = null;
-editor.on('change', function(e) {
-  clearTimeout(timeout);
-  timeout = setTimeout(function() {
-    update();
-  }, 500);
-});
-
+/*
 $(document).ready(function() {
   $.get('/examples/hello.js.txt', function (data) {
     editor.setValue(data);
     editor.moveCursorToPosition({row: 0, column: 0});
   });
 });
+*/
 
 $('#ta_panel_randomwalk .green-btn').on('click', function(e) {
   $.get($(this).data('code'), function(data) {

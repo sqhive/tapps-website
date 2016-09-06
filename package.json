@@ -23,7 +23,6 @@
     "browser-sync": "^2.14.3",
     "browserify": "^13.1.0",
     "browserify-shim": "^3.8.12",
-    "google-closure-library": "^20160822.0.0",
     "gulp": "^3.9.1",
     "gulp-jsbeautifier": "^2.0.3",
     "gulp-nunjucks-render": "^2.0.0",
@@ -42,6 +41,9 @@
     ]
   },
   "browserify-shim": {
-    "goog": "global:goog"
+    "goog": "global:goog",
+    "ace": "global:ace",
+    "Zlib": "global:Zlib",
+    "jQuery": "global:jQuery"
   }
 }

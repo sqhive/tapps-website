@@ -1,0 +1,18 @@
+/**
+ * Hello World
+ */
+
+ class App
+    extends React.Component {
+
+    render() {
+        return (
+            <Dialog
+              title = "Hello!"
+              open = {true} >
+
+              Wasn't that easy?
+            </Dialog>
+        )
+    }
+ }

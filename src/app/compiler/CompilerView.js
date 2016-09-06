@@ -23,20 +23,38 @@ const style = {
   display: 'inline-block',
 };
 
-class EditorCompiler
+class EditorCompilerView
   extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      showLoader: false,
       expanded: false,
     };
   }
 
+  componentWillReceiveProps = (props) => {
+    let $ = require('jQuery')
+
+    $('#code').html('').qrcode({
+			'ecLevel': 'L',
+			'size': 300,
+      'fill': '#1ABC9C',
+			'text': props.compiled
+		});
+  }
+
   handleOptimise = () => {
-    let goog = require('goog');
-    goog.require('goog.crypt.base64');
-    console.log(goog.crypt.base64.encodeByteArray(['t', 'e', 'a']))
+    console.log(this.props.compiled)
+  }
+
+  handleColour = () => {
+
+  }
+
+  handleShare = () => {
+
   }
 
   render() {
@@ -53,7 +71,10 @@ class EditorCompiler
           <div style={{textAlign: 'center'}}>
             <Paper style={style} zDepth={2} rounded={false} >
               <div id="code">
+              { this.state.showLoader ?
                 <CircularProgress size={1.5} />
+                : null
+              }
               </div>
             </Paper>
             </div>
@@ -63,7 +84,6 @@ class EditorCompiler
           <FlatButton label="Colour" />
           <FlatButton style={{float: 'right'}} label="Share" />
           <CardTitle
-
             title = "My First Tapp"
             expandable = { true }
           />
@@ -79,4 +99,4 @@ class EditorCompiler
   }
 }
 
-export default EditorCompiler;
+export default EditorCompilerView;
