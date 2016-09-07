@@ -42,8 +42,9 @@
   },
   "browserify-shim": {
     "goog": "global:goog",
-    "ace": "global:ace",
     "Zlib": "global:Zlib",
+    "Babili": "global:Babili",
+    "ace": "global:ace",
     "jQuery": "global:jQuery"
   }
 }

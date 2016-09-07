@@ -1,0 +1,85 @@
+/**
+ * Museum Guide
+ */
+
+ const info = {
+    title: 'A Wheatfield, with Cypresses',
+    subtitle: '1889, Vincent van Gogh',
+    related: [
+        'Sunflowers',
+        'Long Grass with Butterflies',
+    ],
+    facts: [
+        {name: 'Date made', value: '1890'},
+        {name: 'Medium', value: 'Oil on canvas'},
+        {name: 'Dimensions', value: '64.5 x 80.7 cm'},
+    ],
+    text: `
+        This was painted in September 1889, when Van Gogh was in the
+        St-Rémy mental asylum, near Arles, where he was a patient from
+        May 1889 until May 1890. It is one of three almost identical versions
+        of the composition. Another painting of the cypresses (New York,
+        Metropolitan Museum of Art) was painted earlier in July 1889, and was
+        probably painted directly in front of the subject.
+    `
+ }
+
+ class App
+    extends React.Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            expanded: false
+        }
+    }
+
+    handleToggle = () => {
+        this.setState({
+            expanded: !this.state.expanded
+        })
+    }
+
+    render() {
+        return (
+        <Card expanded={this.state.expanded}>
+            <CardHeader
+              title="Painting Information"
+              subtitle="British Museum"
+              actAsExpander={true}
+              showExpandableButton={true}
+            />
+            <CardTitle title={info.title} subtitle={info.subtitle} />
+            <CardActions>
+                <Toggle
+                    toggled={this.state.expanded}
+                    onToggle={this.handleToggle}
+                    labelPosition="right"
+                    label="Show related paintings."
+                  />
+            </CardActions>
+            <CardText expandable={true}>
+                <List>
+                    {info.related.map((o, i) => <ListItem primaryText={o}/>)}
+                </List>
+            </CardText>
+            <Divider />
+            <CardText>{info.text}</CardText>
+            <CardText>
+                <Table selectable={false}>
+                    <TableBody displayRowCheckbox={false}>
+                    {info.facts.map((o, i) => {
+                        return (
+                        <TableRow>
+                            <TableRowColumn><b>{o.name}</b></TableRowColumn>
+                            <TableRowColumn>{o.value}</TableRowColumn>
+                        </TableRow>
+                        )
+                    })}
+                    </TableBody>
+                </Table>
+            </CardText>
+        </Card>
+        )
+    }
+ }

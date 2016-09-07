@@ -14,6 +14,7 @@ class EditorCompiler
   constructor(props) {
     super(props)
     this.state = {
+      source: null,
       compiled: null
     }
   }
@@ -26,24 +27,28 @@ class EditorCompiler
   	return array
   }
 
-  componentWillReceiveProps = (props) => {
-
+  compile = (src) => {
     let goog = require('goog'),
         Zlib = require('Zlib')
 
-    let gzip = new Zlib.Gzip(this.stringToByteArray(props.source))
+    let gzip = new Zlib.Gzip(this.stringToByteArray(src))
     let compressed = gzip.compress()
     let code = goog.crypt.base64.encodeByteArray(compressed)
 
     this.setState({
+      source: src,
       compiled: code
     })
+  }
+
+  componentWillReceiveProps = (props) => {
+    this.compile(props.source)
   }
 
   render() {
     return (
       <MuiThemeProvider>
-        <EditorCompilerView compiled={this.state.compiled}/>
+        <EditorCompilerView compiler={this.compile} compiled={this.state.compiled} source={this.state.source}/>
       </MuiThemeProvider>
     );
   }

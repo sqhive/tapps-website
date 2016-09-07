@@ -46,7 +46,18 @@ class EditorCompilerView
   }
 
   handleOptimise = () => {
-    console.log(this.props.compiled)
+    let Babili = require('Babili')
+    let minified =  Babili.transform(this.props.source, {
+      presets: ['react'],
+      plugins: [
+          'transform-class-properties',
+          'transform-object-rest-spread',
+          'transform-flow-strip-types'
+      ]
+    }).code;
+    console.log("Minified: " + minified.length)
+    console.log("Original: " + this.props.source.length)
+    this.props.compiler(minified)
   }
 
   handleColour = () => {
