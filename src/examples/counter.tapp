@@ -1,0 +1,47 @@
+/**
+ * Counter
+ */
+
+ class App
+    extends React.Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            secondsElapsed: 0
+        }
+    }
+
+    setSeconds = (secs) => {
+        this.setState({
+            secondsElapsed: secs
+        })
+    }
+
+    tick = () => {
+        this.setSeconds(this.state.secondsElapsed + 1)
+    }
+
+    reset = () => {
+        this.setSeconds(0)
+    }
+
+    componentDidMount = () => {
+        this.interval = setInterval(this.tick, 1000);
+    }
+
+    componentWillUnmount = () => {
+        clearInterval(this.interval)
+    }
+
+    render() {
+        return (
+        <div>
+            <RaisedButton label="Reset" onTouchTap={this.reset} />
+            <Paper>
+                {this.state.secondsElapsed}
+            </Paper>
+        </div>
+        );
+    }
+}

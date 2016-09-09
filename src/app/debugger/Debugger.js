@@ -32,17 +32,16 @@ class EditorDebugger
             </List>
             <Divider />
             <List>
-              <Subheader>Priority Interruptions</Subheader>
-              <ListItem primaryText="Events and reminders" rightToggle={<Toggle />} />
-              <ListItem primaryText="Calls" rightToggle={<Toggle />} />
+              <Subheader>Debugger Settings</Subheader>
+              <ListItem primaryText="Show errors" rightToggle={<Toggle />} />
+              <ListItem primaryText="Show suggestions" rightToggle={<Toggle />} />
               <ListItem primaryText="Messages" rightToggle={<Toggle />} />
             </List>
             <Divider />
             <List>
-              <Subheader>Hangout Notifications</Subheader>
-              <ListItem primaryText="Notifications" leftCheckbox={<Checkbox />} />
-              <ListItem primaryText="Sounds" leftCheckbox={<Checkbox />} />
-              <ListItem primaryText="Video sounds" leftCheckbox={<Checkbox />} />
+              <Subheader>Error Notifications</Subheader>
+              <ListItem primaryText="Include code snippet" leftCheckbox={<Checkbox />} />
+              <ListItem primaryText="Point to error line" leftCheckbox={<Checkbox />} />
             </List>
         </Drawer>
       </MuiThemeProvider>

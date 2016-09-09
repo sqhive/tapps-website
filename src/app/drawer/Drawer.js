@@ -27,15 +27,23 @@ class EditorDrawer
     }
   ]
 
+  snippets = [
+    {
+      name: 'Hello',
+      src: '/examples/hello.tapp'
+    },
+    {
+      name: 'Counter',
+      src: '/examples/counter.tapp',
+    }
+  ]
+
   constructor(props) {
     super(props)
-    this.state = {
-      id: 0,
-    }
   }
 
-  handleLoad = (id:number) => {
-    this.props.updater(this.examples[id].src)
+  handleLoad = (array, id:number) => {
+    this.props.updater(array[id].src)
   }
 
   render() {
@@ -46,9 +54,9 @@ class EditorDrawer
           <List>
             <Subheader>Tapps</Subheader>
             <ListItem primaryText="Restaurant Menu"
-              onTouchTap={() => { this.handleLoad(0) } } />
+              onTouchTap={() => { this.handleLoad(this.examples, 0) } } />
             <ListItem primaryText="Museum Guide"
-              onTouchTap={() => { this.handleLoad(1) } } />
+              onTouchTap={() => { this.handleLoad(this.examples, 1) } } />
             <ListItem primaryText="Tube Route" />
             <ListItem primaryText="Tic-tac-toe" />
           </List>
@@ -56,10 +64,11 @@ class EditorDrawer
           <List>
             <Subheader>Snippets</Subheader>
             <ListItem primaryText="Hello" />
+            <ListItem primaryText="Counter"
+              onTouchTap={() => {this.handleLoad(this.snippets, 1)}}/>
             <ListItem primaryText="Encrypter" />
             <ListItem primaryText="Matulator" />
             <ListItem primaryText="Randomiser" />
-            <ListItem primaryText="Counter" />
           </List>
         </Drawer>
       </MuiThemeProvider>

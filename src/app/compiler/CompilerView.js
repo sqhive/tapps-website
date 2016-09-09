@@ -29,7 +29,7 @@ class EditorCompilerView
   constructor(props) {
     super(props);
     this.state = {
-      showLoader: false,
+      showLoader: true,
       expanded: false,
     };
   }
