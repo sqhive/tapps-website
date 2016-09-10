@@ -19,7 +19,18 @@
 	-moz-transition: all .5s ease;
 	transition: all .5s ease;
 
+  .logo {
+    h5 {
+    	color: #888;
+    	font-family: 'Lily Script One';
+    	font-size: 30px;
+    	position: relative;
+    	font-weight: 300;
+    }
+  }
+
   .nav-holder {
+    float: right;
 
     ul {
       list-style: none;
@@ -30,7 +41,7 @@
       li {
       	float: left;
       	list-style: none;
-      	margin-left: 22px;
+      	margin-left: 40px;
 
         &:first-child {
         	margin-left: 0px;
@@ -50,7 +61,6 @@
     &:hover{
     	top: -5px;
     	border-bottom: 0px solid #4aa89f;
-
     }
 
     a {
@@ -71,17 +81,4 @@
 	cursor: pointer;
 	position: relative;
 	bottom: 35px;
-}
-
-#logo {
-	padding-top: 30px;
-
-  h5 {
-  	color: #888;
-  	font-family: 'Lily Script One';
-  	font-size: 30px;
-  	position: relative;
-  	top: -5px;
-  	font-weight: 300;
-  }
 }

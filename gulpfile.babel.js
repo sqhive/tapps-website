@@ -146,7 +146,9 @@ gulp.task('server', () => {
   });
   // Reload on updates to distribution code.
   gulp.watch([
-      path.join(conf.paths.dist, '/*.js')
+      path.join(conf.paths.dist, '/**/*.html'),
+      path.join(conf.paths.dist, '/**/*.js'),
+      path.join(conf.paths.dist, '/**/*.css')
     ], (event) => {
       bsync.reload(event.path);
   });

@@ -1,0 +1,70 @@
+/**
+ * Newsletter
+ *
+ * @type: component
+ */
+
+#newsletter {
+	background-size: cover;
+	background-color: #235071;
+	padding-top: 49px;
+
+  h3 {
+  	color: rgba(255,255,255,0.7);
+  	font-weight:normal;
+  }
+
+  i {
+  	float: left;
+  	display: block;
+  	font-size: 170px;
+  	height: 100px;
+  	width: 100px;
+  	line-height: 0.35;
+  	color: rgba(255,255,255,0.7);
+  	float: left;
+  }
+
+  .inner-section {
+  	padding-bottom: 10px;
+  }
+
+  .newsletter-email {
+  	width: 60% !important;
+  	top: 3px;
+  	position: relative;
+  	height: 63px !important;
+  }
+
+  .newsletter-btn {
+  	background-color: #dd4749;
+  	border-style: none;
+  	border-bottom: 3px solid #222;
+  	padding: 20px;
+  	color: #fff;
+  	font-family: 'Montserrat';
+  	border-bottom: 3px solid #a02a2c;
+  	cursor: pointer;
+  	position: relative;
+  	margin-left: 5%;
+  	font-size: 18px;
+
+    &:hover {
+      color: #fff;
+    	top: 3px;
+    	border-bottom: 0px solid #a02a2c;
+    }
+  }
+
+  .green-btn {
+  	border-bottom: 3px solid #20a86a !important;
+  	background-color: #30d589 !important;
+  	cursor: default !important;
+  }
+
+  .form-sent {
+  	top: 3px;
+  	height: 64px;
+  	text-align: center;
+  }
+}
