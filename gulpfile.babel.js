@@ -12,6 +12,9 @@ import browserify from 'browserify';
 import bsync from 'browser-sync';
 import vss from 'vinyl-source-stream'
 import nunjucks from 'gulp-nunjucks-render'
+import concat from 'gulp-concat'
+import minify from 'gulp-clean-css'
+import uglify from'gulp-uglify'
 import sass from 'gulp-sass'
 import sassGlob from 'gulp-sass-glob'
 import prettify from 'gulp-jsbeautifier'
@@ -32,7 +35,10 @@ var conf = {
 /**
  * Build task
  */
-gulp.task('build-templates', () => {
+gulp.task('build-templates',
+  [
+    'build-templates-styles'
+  ], () => {
 
   return gulp.src(
     path.join(conf.paths.src, '/templates/*.+(html)')
@@ -56,14 +62,16 @@ gulp.task('build-templates-styles', () => {
   return gulp.src(
     path.join(conf.paths.src, '/templates/styles/**/*.scss')
   )
-  // Compile to output.
+  // Compile.
   .pipe(sassGlob())
   .pipe(sass().on('error', sass.logError))
-  // Make output pretty.
-  .pipe(prettify())
-  // Output files.
+  // Minify output.
+  .pipe(minify())
+  // Concat files.
+  .pipe(concat('app.css'))
+  // Output file.
   .pipe(gulp.dest(
-    path.join(conf.paths.dist, '/css/')
+    path.join(conf.paths.dist, '/')
   ))
 })
 
@@ -113,15 +121,10 @@ gulp.task('build', [
  * Watch task
  */
 gulp.task('watch', () => {
-  // Watch for styles changes.
-  gulp.watch(
-    path.join(conf.paths.src, '/templates/css/**/*.scss'),
-    ['build-css']
-  );
   // Watch for templates changes.
   gulp.watch(
-    path.join(conf.paths.src, '/templates/**/*.+(html|nj)'),
-    ['build']
+    path.join(conf.paths.src, '/templates/**/*.+(html|scss)'),
+    ['build-templates']
   );
   // Watch for app changes.
   gulp.watch(
