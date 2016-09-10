@@ -14,5 +14,9 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "ace-builds": "^1.2.5",
+    "zlib.js": "^0.2.0"
+  }
 }

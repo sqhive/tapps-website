@@ -63,6 +63,9 @@ class EditorView
       this.editor.setValue(data);
       this.editor.moveCursorToPosition({row: 0, column: 0});
     })
+    $('html, body').animate({
+      scrollTop: 0
+    }, 2000)
   }
 
   toggleDrawer = () => {

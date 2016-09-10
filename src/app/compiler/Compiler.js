@@ -11,11 +11,14 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 class EditorCompiler
   extends Component {
 
+  timeout = null
+
   constructor(props) {
     super(props)
     this.state = {
       source: null,
-      compiled: null
+      compiled: null,
+      message: null,
     }
   }
 
@@ -37,7 +40,39 @@ class EditorCompiler
 
     this.setState({
       source: src,
-      compiled: code
+      compiled: code,
+      message: '',
+    })
+  }
+
+  optimise = () => {
+    let Babili = require('Babili')
+
+    try {
+      let minified =  Babili.transform(this.state.source, {
+        presets: ['react'],
+        plugins: [
+            'transform-class-properties',
+            'transform-object-rest-spread',
+            'transform-flow-strip-types'
+        ]
+      }).code
+
+      console.log("Minified: " + minified.length)
+      console.log("Original: " + this.state.source.length)
+
+      let diff = this.state.source.length - minified.length
+      this.compile(minified)
+      this.message("Yay! Optimised code and reduced its source size by " + diff + " bytes.")
+
+    } catch (error) {
+      this.message(error.name + ": " + error.message.split('\n')[0])
+    }
+  }
+
+  message = (msg) => {
+    this.setState({
+      message: msg,
     })
   }
 
@@ -48,7 +83,12 @@ class EditorCompiler
   render() {
     return (
       <MuiThemeProvider>
-        <EditorCompilerView compiler={this.compile} compiled={this.state.compiled} source={this.state.source}/>
+        <EditorCompilerView
+          source={this.state.source}
+          compiled={this.state.compiled}
+          optimiser={this.optimise}
+          message={this.state.message}
+          />
       </MuiThemeProvider>
     );
   }
