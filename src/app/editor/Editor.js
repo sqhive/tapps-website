@@ -6,8 +6,8 @@
 
 import React, {Component} from 'react'
 
-import EditorView from './view'
-import EditorCompiler from './compiler'
+import EditorView from './EditorView'
+import EditorCompiler from '../compiler'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 

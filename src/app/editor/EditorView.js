@@ -6,8 +6,8 @@
 
 import React, {Component} from 'react'
 
-import EditorDrawer from './drawer'
-import EditorDebugger from './debugger'
+import EditorDrawer from '../drawer'
+import EditorDebugger from '../debugger'
 
 import Paper from 'material-ui/Paper'
 import Divider from 'material-ui/Divider'
@@ -87,7 +87,7 @@ class EditorView
           <FlatButton style={{float: 'right'}} onTouchTap={this.toggleDebugger} label="Debugger" />
           <FlatButton style={{float: 'right'}} onTouchTap={this.toggleDrawer} label="Examples" secondary={true} />
 
-          <EditorDrawer open={this.state.openDrawer} updater={this.onUpdate} />
+          <EditorDrawer open={this.state.openDrawer} toggle={this.toggleDrawer} updater={this.onUpdate} />
           <EditorDebugger open={this.state.openDebugger} />
         </Paper>
       </MuiThemeProvider>

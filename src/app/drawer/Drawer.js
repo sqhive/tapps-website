@@ -44,6 +44,7 @@ class EditorDrawer
 
   handleLoad = (array, id:number) => {
     this.props.updater(array[id].src)
+    this.props.toggle()
   }
 
   render() {
