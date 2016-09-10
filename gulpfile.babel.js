@@ -11,9 +11,11 @@ import babelify from 'babelify';
 import browserify from 'browserify';
 import bsync from 'browser-sync';
 import vss from 'vinyl-source-stream'
-import nunjucks from 'gulp-nunjucks-render';
-import removeEmptyLines from 'gulp-remove-empty-lines';
-import prettify from 'gulp-jsbeautifier';
+import nunjucks from 'gulp-nunjucks-render'
+import sass from 'gulp-sass'
+import sassGlob from 'gulp-sass-glob'
+import prettify from 'gulp-jsbeautifier'
+import removeEmptyLines from 'gulp-remove-empty-lines'
 
 /**
  * Common paths.
@@ -47,8 +49,23 @@ gulp.task('build-templates', () => {
   // Output files.
   .pipe(gulp.dest(
     path.join(conf.paths.dist, '/')
-  ));
-});
+  ))
+})
+
+gulp.task('build-templates-styles', () => {
+  return gulp.src(
+    path.join(conf.paths.src, '/templates/styles/**/*.scss')
+  )
+  // Compile to output.
+  .pipe(sassGlob())
+  .pipe(sass().on('error', sass.logError))
+  // Make output pretty.
+  .pipe(prettify())
+  // Output files.
+  .pipe(gulp.dest(
+    path.join(conf.paths.dist, '/css/')
+  ))
+})
 
 /**
  * Build app task.

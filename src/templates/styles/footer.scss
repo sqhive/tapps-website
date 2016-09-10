@@ -1,0 +1,102 @@
+/**
+ * Footer
+ *
+ * @type: component
+ */
+
+#footer {
+	background-size: cover;
+	background-color: #1ABC9C;
+	padding-top: 44px;
+
+  h4, h5, h6 {
+    color: #fff;
+  	font-family: 'Montserrat';
+  }
+
+  h3 {
+  	font-family: 'Lily Script One';
+  	color: #fff;
+  	opacity: 0.2;
+  	font-weight: normal;
+  	font-size: 30px;
+  	margin-bottom: 0px;
+  	margin-top: 66px;
+  }
+
+  li {
+  	list-style: none;
+  	font-family: 'Montserrat';
+  	font-size: 17px;
+  	margin-bottom: 3px;
+
+    a {
+    	color: #fff;
+    }
+  }
+
+  p {
+  	color: #fff;
+  }
+
+  i {
+  	font-size: 40px;
+  	margin-left: 22px;
+  	color: #fff;
+  	opacity: 0.5;
+  	-webkit-transition: all .3s ease;
+  	-moz-transition: all .3s ease;
+  	transition: all .3s ease;
+
+    &:hover {
+    	opacity: 1;
+    }
+  }
+
+  .footer-title{
+  	margin-bottom: 44px;
+  	color: #fff;
+  }
+
+  .footer-social{
+  	margin-top: 11px;
+  }
+
+  .mail-link a{
+  	color: #fff;
+  }
+
+  .mail-link{
+  	margin-top: 22px;
+  	font-size: 16px;
+  	margin-bottom: 44px;
+  }
+
+  .mail-link i{
+  	display: inline-block;
+  	padding-bottom: 6px;
+  	padding-right: 10px;
+  	opacity: 1 !important;
+  }
+
+  .newsletter-email {
+  	background-color: #fff;
+  	border: 1px solid #fff;
+  	height: 54px !important;
+  	color: #666;
+  	width: 100% !important;
+  }
+
+  .newsletter-btn {
+  	padding: 15px;
+  	font-size: 16px;
+  	right: 0px;
+  }
+
+  .green-btn {
+  	border-bottom: 3px solid #20a86a !important;
+  	background-color: #30d589 !important;
+  	cursor: default !important;
+  	text-align: center;
+  }
+}

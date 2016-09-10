@@ -13,6 +13,16 @@ class EditorCompiler
 
   timeout = null
 
+  presets = [
+    'react'
+  ]
+
+  plugins = [
+    'transform-class-properties',
+    'transform-object-rest-spread',
+    'transform-flow-strip-types'
+  ]
+
   constructor(props) {
     super(props)
     this.state = {
@@ -20,6 +30,10 @@ class EditorCompiler
       compiled: null,
       message: null,
     }
+  }
+
+  componentWillReceiveProps = (props) => {
+    this.compile(props.source)
   }
 
   stringToByteArray(str) {
@@ -32,7 +46,18 @@ class EditorCompiler
 
   compile = (src) => {
     let goog = require('goog'),
-        Zlib = require('Zlib')
+        Zlib = require('Zlib'),
+        Babel = require('Babel')
+
+    try {
+      Babel.transform(src, {
+        presets: this.presets,
+        plugins: this.plugins,
+      })
+
+    } catch(error) {
+      return this.error(error)
+    }
 
     let gzip = new Zlib.Gzip(this.stringToByteArray(src))
     let compressed = gzip.compress()
@@ -43,6 +68,7 @@ class EditorCompiler
       compiled: code,
       message: '',
     })
+
   }
 
   optimise = () => {
@@ -50,12 +76,8 @@ class EditorCompiler
 
     try {
       let minified =  Babili.transform(this.state.source, {
-        presets: ['react'],
-        plugins: [
-            'transform-class-properties',
-            'transform-object-rest-spread',
-            'transform-flow-strip-types'
-        ]
+        presets: this.presets,
+        plugins: this.plugins,
       }).code
 
       console.log("Minified: " + minified.length)
@@ -66,18 +88,18 @@ class EditorCompiler
       this.message("Yay! Optimised code and reduced its source size by " + diff + " bytes.")
 
     } catch (error) {
-      this.message(error.name + ": " + error.message.split('\n')[0])
+      this.error(error)
     }
+  }
+
+  error = (error) => {
+    this.message(error.name + ': ' + error.message.split('\n')[0])
   }
 
   message = (msg) => {
     this.setState({
       message: msg,
     })
-  }
-
-  componentWillReceiveProps = (props) => {
-    this.compile(props.source)
   }
 
   render() {

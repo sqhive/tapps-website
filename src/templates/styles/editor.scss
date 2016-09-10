@@ -1,0 +1,20 @@
+/**
+ * Editor
+ *
+ * @type: component
+ */
+
+#editor {
+  font: Monospace !important;
+  position: relative;
+  min-width: 500px;
+  min-height: 300px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  div {
+  	font: inherit !important
+  }
+}

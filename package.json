@@ -27,6 +27,8 @@
     "gulp-jsbeautifier": "^2.0.3",
     "gulp-nunjucks-render": "^2.0.0",
     "gulp-remove-empty-lines": "0.0.8",
+    "gulp-sass": "^2.3.2",
+    "gulp-sass-glob": "^1.0.6",
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
@@ -44,6 +46,7 @@
     "goog": "global:goog",
     "Zlib": "global:Zlib",
     "Babili": "global:Babili",
+    "Babel": "global:Babel",
     "ace": "global:ace",
     "jQuery": "global:jQuery"
   }
