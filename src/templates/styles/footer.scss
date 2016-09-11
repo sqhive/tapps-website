@@ -4,6 +4,91 @@
  * @type: component
  */
 
+.mdl-mega-footer {
+  background-size: cover;
+	background-color: #1ABC9C;
+	padding-top: 44px;
+  overflow: hidden;
+
+  & &__heading {
+    margin-bottom: 20pt;
+    color: #fff;
+    font-size: 2em;
+    font-family: 'Roboto';
+    font-weight: 300;
+  }
+
+  &__top-section {
+    .mdl-mega-footer__left-section {
+
+    }
+  }
+
+  &__middle-section {
+    max-width: 90%;
+    margin: 0 auto;
+  }
+
+  &__bottom-section {
+    max-height: 2.5em;
+    margin: 0;
+    padding: 0;
+
+    .mdl-logo {
+      font-family: 'Lily Script One';
+    	color: #fff;
+    	opacity: 0.2;
+    	font-weight: normal;
+    	font-size: 2.5em;
+    	margin-bottom: 0px;
+    }
+
+    .mdl-links {
+      float: right;
+
+      a {
+        display: inline-block;
+
+        i {
+          font-size: 4.5em;
+          color: #fff;
+          opacity: 0.5;
+          -webkit-transition: all .3s ease;
+          -moz-transition: all .3s ease;
+          transition: all .3s ease;
+
+          &:hover {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+
+  &__drop-down-section {
+    padding: 1em 2em 0 1em;
+    color: #fff;
+
+    ul {
+      li {
+        list-style: none;
+      	font-family: 'Montserrat';
+      	font-size: 1.2em;
+      	margin-bottom: 7pt;
+      }
+    }
+
+    p {
+      padding: 5pt 0;
+    }
+  }
+
+  p {
+  	color: #fff;
+  }
+}
+
+/*
 #footer {
 	background-size: cover;
 	background-color: #1ABC9C;
@@ -100,3 +185,4 @@
   	text-align: center;
   }
 }
+*/

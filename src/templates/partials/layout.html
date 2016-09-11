@@ -8,19 +8,21 @@
   <meta name="viewport" content="width=device-width, maximum-scale=1, user-scalable=no" />
 
   <title>Tapps | The awesome tiny apps</title>
-  
+
   {% include 'partials/header.html' %}
 
   {% block extrastyles %}{% endblock %}
 
 </head>
 <body>
-  <div id="main-container">
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
     {% include 'partials/nav.html' %}
-
-    {% block content %}{% endblock %}
-
-    {% include 'partials/footer.html' %}
+    <main class="mdl-layout__content">
+      <div class="page-content">
+        {% block content %}{% endblock %}
+      </div>
+      {% include 'partials/footer.html' %}
+    </main>
   </div>
 
   <!-- Included JS Files (Compressed) -->

@@ -4,6 +4,7 @@
  * @type: component
  */
 
+
 #editor {
   font: Monospace !important;
   position: relative;
@@ -13,6 +14,10 @@
   right: 0;
   bottom: 0;
   left: 0;
+
+  &-panel {
+    margin: 5em 0;
+  }
 
   div {
   	font: inherit !important

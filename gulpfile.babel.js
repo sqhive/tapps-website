@@ -123,8 +123,13 @@ gulp.task('build', [
 gulp.task('watch', () => {
   // Watch for templates changes.
   gulp.watch(
-    path.join(conf.paths.src, '/templates/**/*.+(html|scss)'),
+    path.join(conf.paths.src, '/templates/**/*.html'),
     ['build-templates']
+  );
+  // Watch for styles changes.
+  gulp.watch(
+    path.join(conf.paths.src, '/templates/**/*.+(css|scss)'),
+    ['build-templates-styles']
   );
   // Watch for app changes.
   gulp.watch(

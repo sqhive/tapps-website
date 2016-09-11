@@ -6,10 +6,12 @@
 
 #newsletter {
 	background-size: cover;
-	background-color: #235071;
+	background-color: #bbb;
 	padding-top: 49px;
 
-  h3 {
+  h4 {
+    padding: 0;
+    margin: 0 0 0.1em 0;
   	color: rgba(255,255,255,0.7);
   	font-weight:normal;
   }
@@ -23,6 +25,10 @@
   	line-height: 0.35;
   	color: rgba(255,255,255,0.7);
   	float: left;
+  }
+
+  .mdl-grid {
+    max-width: 70%;
   }
 
   .inner-section {

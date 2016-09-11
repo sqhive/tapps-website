@@ -2,57 +2,22 @@
 
 {% block extrastyles %}
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://code.getmdl.io/1.2.0/material.indigo-pink.min.css">
-  <script defer src="https://code.getmdl.io/1.2.0/material.min.js"></script>
 {% endblock %}
 
 {% block content %}
-    <div class="navbar-offset">&nbsp;</div>
-    <section id="editor-panel">
-      <div id="ide"></div>
-    </section>
-
-    <a id="gallery-scroll"></a>
-    <section id="features-detail" class="odd-section">
-      <br>
-      <div class="row inner-section section-preamble text-center flyIn">
-        <h2>Ta-da-app! Examples?</h2>
-        <p>
-          We have prepared a collection of examples that may help you create your own Tapp.
-        </p>
-        <div class="hr"></div>
-      </div>
-      <div class="row inner-section platform-row">
-        <div class="six columns flyLeft text-center">
-          <div class="flexslider">
-            <ul class="slides">
-              <li>
-                <img alt="desktop" src="assets/images/phone.png" />
-              </li>
-
-              <li>
-                <img alt="desktop" src="assets/images/phone.png" />
-              </li>
-
-              <li>
-                <img alt="desktop" src="assets/images/phone.png" />
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div id="ta_panel_randomwalk" class="six columns flyRight text-right">
-          <h2 class="text-right">Random Walk</h2>
-          <div class="hr"></div>
-          <p class="text-right">
-            Description for random walk.
-          </p>
-          <div class="green-btn" data-code="/examples/randomwalk.js.txt">Use code</div>
-        </div>
-      </div>
+<section id="editor-panel">
+  <div id="ide"></div>
 </section>
-
+<section id="features-detail" class="odd-section">
+  <br>
+  <div class="row inner-section section-preamble text-center flyIn">
+    <h2>Ta-da-app! Had fun?</h2>
+    <p>
+      We are looking to add more Tapps to our examples collection. Share yours?
+    </p>
+    <div class="hr"></div>
+  </div>
+</section>
 {% endblock %}
 
 {% block extrascripts %}
@@ -66,15 +31,4 @@
 <script src="babel.min.js"></script>
 <script src="babili.min.js"></script>
 <script src="app.js"></script>
-
-<script>
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-ga('create', 'UA-55181117-2', 'auto');
-ga('send', 'pageview');
-
-</script>
 {% endblock %}
