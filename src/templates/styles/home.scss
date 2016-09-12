@@ -24,14 +24,20 @@
 
   img {
   	position: relative;
-  	top: 5px;
+  	top: 10em;
   }
 
   h1 {
   	font-size: 48px;
+    font-family: 'Droid Sans', Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    font-style: normal;
+    text-rendering: optimizeLegibility;
+    line-height: 1.1;
   }
 
   h1, h2, h3, h4, h5, h6 {
+    margin: 0;
     color: rgba(255,255,255,0.7);
   }
 
@@ -46,6 +52,10 @@
   	height: 290px;
   	margin-top: 44px;
   	border: none;
+  }
+
+  .mdl-grid {
+    max-width: 95%;
   }
 
   .hr {
