@@ -2,6 +2,27 @@
  * Counter
  */
 
+ const style = {
+     div: {
+         position: 'absolute',
+         width: 200,
+         height: 200,
+         top: 0,
+         left: 0,
+         right: 0,
+         bottom: 0,
+         margin: 'auto',
+         textAlign: 'center'
+     },
+     paper: {
+         margin: '0 auto',
+         width: '100px',
+         height: '100px',
+         lineHeight: '100px',
+         fontSize: '2em',
+     }
+ }
+
  class App
     extends React.Component {
 
@@ -36,11 +57,12 @@
 
     render() {
         return (
-        <div>
-            <RaisedButton label="Reset" onTouchTap={this.reset} />
-            <Paper>
+        <div style={style.div}>
+            <Paper style={style.paper}>
                 {this.state.secondsElapsed}
             </Paper>
+            <br/>
+            <RaisedButton label="Reset" onTouchTap={this.reset} />
         </div>
         );
     }
