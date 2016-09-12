@@ -43,7 +43,7 @@ class EditorView
     this.editor.on('change', this.onChange)
 
     var $ = require('jQuery')
-    $.get('/examples/hello.tapp', (data) => {
+    $.get('./examples/hello.tapp', (data) => {
       this.editor.setValue(data);
       this.editor.moveCursorToPosition({row: 0, column: 0});
     })

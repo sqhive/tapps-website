@@ -19,22 +19,22 @@ class EditorDrawer
 
   examples = [{
       name: 'Restaurant Menu',
-      src: '/examples/restaurant.tapp',
+      src: './examples/restaurant.tapp',
     },
     {
       name: 'Museum Guide',
-      src: '/examples/museum.tapp',
+      src: './examples/museum.tapp',
     }
   ]
 
   snippets = [
     {
       name: 'Hello',
-      src: '/examples/hello.tapp'
+      src: './examples/hello.tapp'
     },
     {
       name: 'Counter',
-      src: '/examples/counter.tapp',
+      src: './examples/counter.tapp',
     }
   ]
 
