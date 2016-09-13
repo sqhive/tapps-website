@@ -30,6 +30,7 @@ class App
     constructor(props) {
         super(props)
         Menu.items.forEach(i => { i.visible = true; i.selected = false } )
+        this.state = {banner: true}
     }
 
     componentWillMount() {
@@ -50,6 +51,7 @@ class App
 
     search = (e) => {
         let query = e.target.value.toLowerCase()
+        this.setState({banner: query.length == 0})
         Menu.items.forEach(i => {
             i.visible = i.title.toLowerCase().indexOf(query) >= 0
         })
@@ -59,11 +61,13 @@ class App
     render = () => {
         return (
         <div>
+            {this.state.banner ?
             <Paper>
                 <center>
                 <h1 style={{margin: 0, padding: '2em 0'}}>Jamie's Italian</h1>
                 </center>
             </Paper>
+            : null }
             <AppBar
                 title = {
                     <TextField
