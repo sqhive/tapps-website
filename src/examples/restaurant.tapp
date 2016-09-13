@@ -1,0 +1,128 @@
+/**
+ * Restaurant Menu
+ */
+
+let Menu = {
+    sections: [
+        { title: 'Mains' },
+        { title: 'Sides' },
+        { title: 'Desserts' }
+    ],
+    items: [
+        { section: 0, price: 13.95, title: 'Gennaro\'s Chicken Primavera' },
+        { section: 0, price: 15.95, title: 'Italian Steak & Fries' },
+        { section: 0, price: 13.95, title: 'Jamie\'s Favourite Porchetta' },
+        { section: 0, price: 16.95, title: 'Herby Lamb Steak' },
+        { section: 0, price: 10.50, title: 'Veggie Burger' },
+        { section: 1, price: 3.55, title: 'Rocket & Parmesan' },
+        { section: 1, price: 3.85, title: 'Funky Chips' },
+        { section: 1, price: 3.95, title: 'Caprese Salad' },
+        { section: 1, price: 3.55, title: 'Seasonal Greens' },
+        { section: 2, price: 5.75, title: 'Epic Brownie' },
+        { section: 2, price: 5.55, title: 'Strawberries & Frozen Yoghurt' },
+        { section: 2, price: 4.95, title: 'Frozen Desserts' },
+    ]
+}
+
+class App
+    extends React.Component {
+
+    constructor(props) {
+        super(props)
+        Menu.items.forEach(i => { i.visible = true; i.selected = false } )
+    }
+
+    componentWillMount() {
+        this.update()
+    }
+
+    update = () => {
+        this.setState({
+        sections: Menu.sections,
+            items: Menu.items
+        })
+    }
+
+    select = (key) => {
+        Menu.items[key].selected = !Menu.items[key].selected
+        this.update()
+    }
+
+    search = (e) => {
+        let query = e.target.value.toLowerCase()
+        Menu.items.forEach(i => {
+            i.visible = i.title.toLowerCase().indexOf(query) >= 0
+        })
+        this.update()
+    }
+
+    render = () => {
+        return (
+        <div>
+            <Paper>
+                <center>
+                <h1 style={{margin: 0, padding: '2em 0'}}>Jamie's Italian</h1>
+                </center>
+            </Paper>
+            <AppBar
+                title = {
+                    <TextField
+                        hintText="Search"
+                        onChange={this.search} />
+                } />
+            <Paper zDepth={2}>
+                <OrderSummary
+                    items={this.state.items} />
+                <OrderList
+                    sections={this.state.sections}
+                    items={this.state.items}
+                    select={this.select} />
+            </Paper>
+        </div>
+        );
+    }
+}
+
+class OrderSummary
+    extends React.Component {
+
+    render() {
+        return (
+        <h2 style={{margin: 0, padding: '1em 0'}}>
+            <center>
+                Total: &nbsp;&pound;{parseFloat(Math.round(
+                    this.props.items
+                    .filter(i => i.selected)
+                    .reduce((t, i) => i.price + t, 0)
+                * 100 ) / 100).toFixed(2)}
+            </center>
+        </h2>
+        )
+    }
+}
+
+class OrderList
+    extends React.Component {
+
+    render() {
+        return (
+        <List>
+            {this.props.sections.map((s, j) => {return (
+            <div>
+                <Divider/>
+                <Subheader>{s.title}</Subheader>
+                {this.props.items.map((i, k) => {
+                    if (i.visible && i.section == j) return (
+                        <ListItem
+                            leftIcon={i.selected ? <ActionGrade /> : null}
+                            onTouchTap={() => { this.props.select(k) }} >
+                        &pound;<b>{i.price}</b> &mdash; {i.title}
+                        </ListItem>
+                    )}
+                )}
+            </div>
+            )})}
+        </List>
+        );
+    }
+}
