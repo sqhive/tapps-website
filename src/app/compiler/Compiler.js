@@ -33,7 +33,7 @@ class EditorCompiler
   }
 
   componentWillReceiveProps = (props) => {
-    this.compile(props.source)
+    if (props.source !== this.props.source) this.compile(props.source)
   }
 
   stringToByteArray(str) {
@@ -68,7 +68,7 @@ class EditorCompiler
       compiled: code,
       message: '',
     })
-
+    this.props.onCompile(code)
   }
 
   optimise = () => {

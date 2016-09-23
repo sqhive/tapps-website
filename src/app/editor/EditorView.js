@@ -9,18 +9,9 @@ import React, {Component} from 'react'
 import EditorDrawer from '../drawer'
 import EditorDebugger from '../debugger'
 
-import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar'
-import DropDownMenu from 'material-ui/DropDownMenu'
-import MenuItem from 'material-ui/MenuItem'
 import Paper from 'material-ui/Paper'
 import Divider from 'material-ui/Divider'
 import FlatButton from 'material-ui/FlatButton'
-import RaisedButton from 'material-ui/RaisedButton'
-
-import IconMenu from 'material-ui/IconMenu'
-import IconButton from 'material-ui/IconButton'
-import FontIcon from 'material-ui/FontIcon'
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
@@ -78,12 +69,6 @@ class EditorView
     }, 2000)
   }
 
-  changeView = (event, index, value) => {
-    this.setState({
-      currentView: value
-    })
-  }
-
   /**
    * Toggle EditorDrawer open state.
    */
@@ -106,32 +91,6 @@ class EditorView
     return (
       <MuiThemeProvider>
         <Paper zDepth={1}>
-          <Toolbar>
-            <ToolbarGroup firstChild={true}>
-              <FontIcon className="material-icons">note_add</FontIcon>
-              <ToolbarSeparator />
-              <DropDownMenu value={this.state.currentView} onChange={this.changeView}>
-                <MenuItem value={1} primaryText="My Hello World" />
-              </DropDownMenu>
-            </ToolbarGroup>
-            <ToolbarGroup>
-              <FontIcon className="material-icons">code</FontIcon>
-              <FontIcon className="material-icons">settings</FontIcon>
-              <FontIcon className="material-icons">delete</FontIcon>
-              <ToolbarSeparator />
-              <RaisedButton label="Publish" primary={true} />
-              <IconMenu
-                iconButtonElement={
-                  <IconButton touch={true}><MoreVertIcon /></IconButton>
-                }
-                anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-                targetOrigin={{horizontal: 'right', vertical: 'top'}}
-              >
-                <MenuItem primaryText="Terms & Conditions" />
-                <MenuItem primaryText="Help" />
-              </IconMenu>
-            </ToolbarGroup>
-          </Toolbar>
           <div id="editor"></div>
           <div style={{marginTop: 1}}/>
           <FlatButton label="Settings" />

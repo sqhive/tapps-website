@@ -19,6 +19,8 @@ class Editor
     super(props)
     this.state = {
       compilerSource: null,
+      compiled: null,
+      publish: null,
     }
   }
 
@@ -28,16 +30,22 @@ class Editor
     })
   }
 
+  handleCompile = (value) => {
+    this.setState({
+      compiled: value
+    })
+  }
+
   render() {
     return (
       <MuiThemeProvider>
         <div className="mdl-grid" style={{maxWidth: '85%'}}>
           <div className="mdl-cell mdl-cell--8-col">
+            <EditorPublisher code={this.state.compiled} />
             <EditorView onUpdate={this.handleUpdate} />
           </div>
           <div className="mdl-cell mdl-cell--4-col">
-            <EditorCompiler source={this.state.compilerSource}/>
-            <EditorPublisher />
+            <EditorCompiler source={this.state.compilerSource} onCompile={this.handleCompile} />
           </div>
         </div>
       </MuiThemeProvider>
