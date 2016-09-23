@@ -108,6 +108,8 @@ class EditorView
         <Paper zDepth={1}>
           <Toolbar>
             <ToolbarGroup firstChild={true}>
+              <FontIcon className="material-icons">note_add</FontIcon>
+              <ToolbarSeparator />
               <DropDownMenu value={this.state.currentView} onChange={this.changeView}>
                 <MenuItem value={1} primaryText="My Hello World" />
               </DropDownMenu>
@@ -115,6 +117,7 @@ class EditorView
             <ToolbarGroup>
               <FontIcon className="material-icons">code</FontIcon>
               <FontIcon className="material-icons">settings</FontIcon>
+              <FontIcon className="material-icons">delete</FontIcon>
               <ToolbarSeparator />
               <RaisedButton label="Publish" primary={true} />
               <IconMenu
