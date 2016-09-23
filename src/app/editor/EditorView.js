@@ -84,12 +84,18 @@ class EditorView
     })
   }
 
+  /**
+   * Toggle EditorDrawer open state.
+   */
   toggleDrawer = () => {
     this.setState({
       openDrawer: !this.state.openDrawer
     })
   }
 
+  /**
+   * Toggle EditorDebugger open state.
+   */
   toggleDebugger = () => {
     this.setState({
       openDebugger: !this.state.openDebugger

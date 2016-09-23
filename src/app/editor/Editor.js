@@ -8,6 +8,7 @@ import React, {Component} from 'react'
 
 import EditorView from './EditorView'
 import EditorCompiler from '../compiler'
+import EditorPublisher from '../publisher'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
@@ -36,6 +37,7 @@ class Editor
           </div>
           <div className="mdl-cell mdl-cell--4-col">
             <EditorCompiler source={this.state.compilerSource}/>
+            <EditorPublisher />
           </div>
         </div>
       </MuiThemeProvider>
@@ -43,4 +45,4 @@ class Editor
   }
 }
 
-export default Editor;
+export default Editor
