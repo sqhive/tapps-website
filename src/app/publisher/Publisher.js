@@ -57,7 +57,7 @@ class EditorPublisher
 
     componentDidMount = () => {
       let tapps = []
-      this.tappsRef.limitToLast(25).on('value', (list) => {
+      this.tappsRef.limitToLast(25).once('value', (list) => {
         list.forEach((tapp) => {
           tapps.push(tapp.key)
         })
@@ -136,6 +136,7 @@ class EditorPublisher
 
      changeView = (event, index, value) => {
        this.setState({
+         currentTapp: this.state.myTapps[value],
          currentView: value
        })
      }
@@ -187,11 +188,12 @@ class EditorPublisher
                     }
                   )}
                   <Divider/>
+                  <MenuItem primaryText="Create New Tapp" />
                 </DropDownMenu>
               </ToolbarGroup>
               <ToolbarGroup>
-                <FontIcon className="material-icons">code</FontIcon>
-                <FontIcon className="material-icons">settings</FontIcon>
+                <FontIcon className="material-icons" onTouchTap={() => {this.props.nav(0)}}>code</FontIcon>
+                <FontIcon className="material-icons" onTouchTap={() => {this.props.nav(1)}}>settings</FontIcon>
                 <FontIcon className="material-icons">delete</FontIcon>
                 <ToolbarSeparator />
                 { (this.state.user) ?

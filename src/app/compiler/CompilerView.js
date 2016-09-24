@@ -50,7 +50,7 @@ class EditorCompilerView
     $('#code').html('').qrcode({
 			'ecLevel': 'L',
 			'size': 300,
-      'fill': '#1ABC9C',
+      'fill': '#00BCD4',
 			'text': props.compiled
 		});
 
@@ -110,8 +110,8 @@ class EditorCompilerView
         <div>
           <Card>
             <CardHeader
-              title="Compiler"
-              subtitle="v1.0.2"
+              title="Published"
+              subtitle="Size: 1.2kb"
               actAsExpander={true}
               showExpandableButton={true}
             />
@@ -132,8 +132,18 @@ class EditorCompilerView
               </div>
             </CardMedia>
             <div style={{marginTop: 20}}/>
-            <FlatButton onTouchTap={this.handleOptimise} label="Optimise" />
-            <FlatButton label="Colour" />
+            <Popover
+              open={this.state.openSettingsMenu}
+              anchorEl={this.state.anchorSettingsMenu}
+              anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+              targetOrigin={{horizontal: 'left', vertical: 'top'}}
+              onRequestClose={this.closeSettingsMenu}>
+              <Menu>
+                <MenuItem onTouchTap={this.handleOptimise} primaryText="Optimise" />
+                <MenuItem primaryText="Debugger" />
+              </Menu>
+            </Popover>
+            <FlatButton onTouchTap={this.openSettingsMenu} label="Settings" />
             <FlatButton onTouchTap={this.openShareMenu} style={{float: 'right'}} label="Share" />
             <Popover
               open={this.state.openShareMenu}
