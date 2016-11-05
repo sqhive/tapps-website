@@ -4,6 +4,9 @@
 
 import React, {Component} from 'react'
 
+import Tapp from '../core'
+import update from 'immutability-helper'
+
 import { EditorCompilerView } from '.'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -26,6 +29,7 @@ class EditorCompiler
   constructor(props) {
     super(props)
     this.state = {
+      app: new Tapp(),
       source: null,
       compiled: null,
       message: null,
@@ -33,7 +37,10 @@ class EditorCompiler
   }
 
   componentWillReceiveProps = (props) => {
-    if (props.source !== this.props.source) this.compile(props.source)
+    if (props.app !== this.props.app) {
+      console.log(props.app)
+      this.compile(props.app.source)
+    }
   }
 
   stringToByteArray(str) {
@@ -63,6 +70,14 @@ class EditorCompiler
     let compressed = gzip.compress()
     let code = goog.crypt.base64.encodeByteArray(compressed)
 
+    this.setState(
+      update(this.state, {
+        app: {
+          source: {$set: src},
+          compiled: {$set: code},
+        }
+      })
+    )
     this.setState({
       source: src,
       compiled: code,
@@ -102,10 +117,14 @@ class EditorCompiler
     })
   }
 
+  /**
+   * Render the component.
+   */
   render() {
     return (
       <MuiThemeProvider>
         <EditorCompilerView
+          app={this.state.app}
           source={this.state.source}
           compiled={this.state.compiled}
           optimiser={this.optimise}

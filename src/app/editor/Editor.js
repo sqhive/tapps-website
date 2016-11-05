@@ -35,7 +35,7 @@ class Editor
 
   handleUpdate = (value) => {
     this.setState({
-      compilerSource: value
+      content: value
     })
   }
 
@@ -88,17 +88,19 @@ class Editor
               nav={this.handleNavigation}
               code={this.state.compiled}
               source={this.state.compilerSource} />
-            <SwipeableViews index={this.state.slideIndex}>
+            <SwipeableViews disabled={true} index={this.state.slideIndex}>
               <EditorView
-                onUpdate={this.handleUpdate}
-                content={this.state.content}
+                app={this.state.content}
                 toggleDebugger={this.toggleDebugger}
-                toggleDrawer={this.toggleDrawer} />
+                toggleDrawer={this.toggleDrawer}
+                onUpdate={this.handleUpdate} />
               <EditorSettings />
             </SwipeableViews>
           </div>
           <div className="mdl-cell mdl-cell--4-col">
-            <EditorCompiler source={this.state.compilerSource} onCompile={this.handleCompile} />
+            <EditorCompiler
+              app={this.state.content}
+              onCompile={this.handleCompile} />
             <EditorDrawer open={this.state.openDrawer} toggle={this.toggleDrawer} onUpdate={this.updateView} />
             <EditorDebugger open={this.state.openDebugger} />
           </div>

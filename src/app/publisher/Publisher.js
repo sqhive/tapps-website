@@ -7,6 +7,8 @@
 import React, {Component} from 'react'
 import Firebase from 'firebase'
 
+import Tapp from '../core'
+
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar'
 import DropDownMenu from 'material-ui/DropDownMenu'
 import MenuItem from 'material-ui/MenuItem'
@@ -21,8 +23,6 @@ import IconMenu from 'material-ui/IconMenu'
 import IconButton from 'material-ui/IconButton'
 import FontIcon from 'material-ui/FontIcon'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
-
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 class EditorPublisher
   extends Component {
@@ -58,6 +58,7 @@ class EditorPublisher
       Firebase.initializeApp(config)
       this.initAuth()
       this.tappsRef = Firebase.database().ref('tapps')
+      this.usersRef = Firebase.database().ref('users')
     }
 
     componentDidMount = () => {
@@ -73,13 +74,16 @@ class EditorPublisher
       })
     }
 
+    /**
+     * Clear database references.
+     */
     componentWillUnmount = () => {
       this.tappsRef.off()
+      this.usersRef.off()
     }
 
     /**
      * Initialise Firebase authentication.
-     * @return {[type]} [description]
      */
     initAuth = () => {
       Firebase.auth().getRedirectResult().then((result) => {
@@ -126,6 +130,18 @@ class EditorPublisher
      * Create a new Tapp.
      */
     addTapp = () => {
+      this.tappsRef.push({
+          owner: this.state.user.uid,
+      }).then((snapshot) => {
+        console.log(snapshot.key)
+      })
+    }
+
+    /**
+     * Update a Tapp.
+     * @return {[type]} [description]
+     */
+    updateTapp = () => {
       // Check if user is logged in.
       if (this.checkLogin()) return
       // Publish the Tapp.
@@ -137,18 +153,22 @@ class EditorPublisher
           name: 'My First Tapp',
           code: this.props.code,
           source: this.props.source,
+          owner: Firebase.auth().currentUser.uid,
         })
       } catch (error) {
         this.openErrorDialog(error.message)
       }
     }
 
-    /**
-     * Update a Tapp.
-     * @return {[type]} [description]
-     */
-    updateTapp = () => {
+    removeTapp = () => {
+      this.tappsRef
+        .child(this.state.currentTapp)
+        .remove((error) => {
+          if (error) {
 
+          }
+
+        })
     }
 
 
@@ -162,13 +182,29 @@ class EditorPublisher
        })
 
       this.tappsRef.child(this.state.myTapps[value]).once('value', (snapshot) => {
-        this.props.onUpdate(snapshot.val());
+        this.props.onUpdate(new Tapp(
+          snapshot.key,
+          snapshot.val().owner,
+          snapshot.val().source,
+        ));
       })
 
      }
 
-     onPublish = () => {
+
+     onAdd = () => {
+       // Check if user is logged in.
+       if (this.checkLogin()) return
+       // Add new entry to database.
        this.addTapp()
+     }
+
+     onRemove = () => {
+       this.removeTapp()
+     }
+
+     onPublish = () => {
+       this.updateTapp()
      }
 
     /**
@@ -216,7 +252,7 @@ class EditorPublisher
                   }
                 )}
                 <Divider/>
-                <MenuItem primaryText="Create New Tapp" />
+                <MenuItem primaryText="Create New Tapp" onTouchTap={this.onAdd} />
               </DropDownMenu>
             </ToolbarGroup>
             <ToolbarGroup>
@@ -226,7 +262,7 @@ class EditorPublisher
               : null
               }
               { (this.state.user) ?
-              <FontIcon className="material-icons">delete</FontIcon>
+              <FontIcon className="material-icons" onTouchTap={this.onRemove}>delete</FontIcon>
               : null
               }
               <ToolbarSeparator />

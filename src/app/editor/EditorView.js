@@ -6,6 +6,9 @@
 
 import React, {Component} from 'react'
 
+import Tapp from '../core'
+import update from 'immutability-helper'
+
 import Paper from 'material-ui/Paper'
 import Divider from 'material-ui/Divider'
 import FlatButton from 'material-ui/FlatButton'
@@ -21,6 +24,7 @@ class EditorView
   constructor(props) {
     super(props)
     this.state = {
+      app: new Tapp(),
       currentView: 1,
       timeout: null,
     }
@@ -50,8 +54,8 @@ class EditorView
    * Check if component needs updating.
    */
   shouldComponentUpdate(nextProps) {
-    if (this.props.content) {
-      return this.props.content != nextProps.content
+    if (this.props.app) {
+      return this.props.app != nextProps.app
     }
     return true
   }
@@ -61,8 +65,11 @@ class EditorView
    */
   componentWillUpdate(nextProps, nextState) {
     // If content is provided, update.
-    if (nextProps.content) {
-      this.setValue(nextProps.content.source)
+    if (nextProps.app && nextProps.app != this.state.app) {
+      this.setState({
+        app: nextProps.app
+      })
+      this.setValue(nextProps.app.source)
     }
   }
 
@@ -83,7 +90,17 @@ class EditorView
   onChange = () => {
     clearTimeout(this.timeout)
     this.timeout = setTimeout(() => {
-      this.props.onUpdate(this.editor.getValue())
+      // Update the app.
+      this.setState(
+        // Merge with current state.
+        update(this.state, {
+          app: {
+            source: {$set: this.editor.getValue()}
+          }
+        })
+      )
+      // Lift up the app.
+      this.props.onUpdate(this.state.app)
     }, 500)
   }
 

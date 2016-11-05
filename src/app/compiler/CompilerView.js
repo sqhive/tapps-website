@@ -111,7 +111,7 @@ class EditorCompilerView
           <Card>
             <CardHeader
               title="Published"
-              subtitle="Size: 1.2kb"
+              subtitle={"Size: " + (this.props.app.source ? this.props.app.source.length : 0) + " bytes"}
               actAsExpander={true}
               showExpandableButton={true}
             />
