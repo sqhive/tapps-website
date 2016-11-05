@@ -66,10 +66,14 @@ class EditorView
   componentWillUpdate(nextProps, nextState) {
     // If content is provided, update.
     if (nextProps.app && nextProps.app != this.state.app) {
+      // Update state.
       this.setState({
         app: nextProps.app
       })
-      this.setValue(nextProps.app.source)
+      // Make sure editor is updated only on source change.
+      if (nextProps.app.source != this.state.app.source) {
+        this.setValue(nextProps.app.source)
+      }
     }
   }
 

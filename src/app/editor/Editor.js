@@ -23,26 +23,11 @@ class Editor
   constructor(props) {
     super(props)
     this.state = {
+      app: null,
       slideIndex: 0,
-      compilerSource: null,
-      compiled: null,
-      publish: null,
       openDrawer: false,
       openDebugger: false,
-      content: null,
     }
-  }
-
-  handleUpdate = (value) => {
-    this.setState({
-      content: value
-    })
-  }
-
-  handleCompile = (value) => {
-    this.setState({
-      compiled: value
-    })
   }
 
   handleNavigation = (slide) => {
@@ -51,10 +36,12 @@ class Editor
     })
   }
 
-  updateView = (content) => {
-    this.setState({
-      content: content
-    })
+  updateApp = (app) => {
+    if (app != this.state.app) {
+      this.setState({
+        app: app
+      })
+    }
   }
 
   /**
@@ -84,23 +71,22 @@ class Editor
         <div className="mdl-grid" style={{maxWidth: '85%'}}>
           <div className="mdl-cell mdl-cell--8-col mdl-cell--8-col-tablet">
             <EditorPublisher
-              onUpdate={this.updateView}
+              app={this.state.app}
               nav={this.handleNavigation}
-              code={this.state.compiled}
-              source={this.state.compilerSource} />
-            <SwipeableViews disabled={true} index={this.state.slideIndex}>
+              onUpdate={this.updateApp} />
+            <SwipeableViews index={this.state.slideIndex}>
               <EditorView
-                app={this.state.content}
+                app={this.state.app}
                 toggleDebugger={this.toggleDebugger}
                 toggleDrawer={this.toggleDrawer}
-                onUpdate={this.handleUpdate} />
+                onUpdate={this.updateApp} />
               <EditorSettings />
             </SwipeableViews>
           </div>
           <div className="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet">
             <EditorCompiler
-              app={this.state.content}
-              onCompile={this.handleCompile} />
+              app={this.state.app}
+              onUpdate={this.updateApp} />
             <EditorDrawer open={this.state.openDrawer} toggle={this.toggleDrawer} onUpdate={this.updateView} />
             <EditorDebugger open={this.state.openDebugger} />
           </div>

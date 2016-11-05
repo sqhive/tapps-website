@@ -51,7 +51,7 @@ class EditorCompilerView
 			'ecLevel': 'L',
 			'size': 300,
       'fill': '#00BCD4',
-			'text': props.compiled
+			'text': props.app.compiled
 		});
 
     if (props.message) this.openSnack(props.message)

@@ -30,16 +30,21 @@ class EditorCompiler
     super(props)
     this.state = {
       app: new Tapp(),
-      source: null,
-      compiled: null,
       message: null,
     }
   }
 
-  componentWillReceiveProps = (props) => {
-    if (props.app !== this.props.app) {
-      console.log(props.app)
-      this.compile(props.app.source)
+  componentWillReceiveProps = (nextProps) => {
+    if (this.state.app !== nextProps.app) {
+      this.setState({
+        app: nextProps.app
+      })
+    }
+  }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    if (this.state.app !== prevState.app) {
+      this.compile()
     }
   }
 
@@ -52,6 +57,8 @@ class EditorCompiler
   }
 
   compile = (src) => {
+    src = this.state.app.source
+
     let goog = require('goog'),
         Zlib = require('Zlib'),
         Babel = require('Babel')
@@ -70,20 +77,17 @@ class EditorCompiler
     let compressed = gzip.compress()
     let code = goog.crypt.base64.encodeByteArray(compressed)
 
+    // Update this component's state.
     this.setState(
       update(this.state, {
         app: {
-          source: {$set: src},
           compiled: {$set: code},
-        }
+        },
+        message: {$set: ''}
       })
     )
-    this.setState({
-      source: src,
-      compiled: code,
-      message: '',
-    })
-    this.props.onCompile(code)
+    // Lift up updates.
+    this.props.onUpdate(this.state.app)
   }
 
   optimise = () => {
@@ -125,8 +129,6 @@ class EditorCompiler
       <MuiThemeProvider>
         <EditorCompilerView
           app={this.state.app}
-          source={this.state.source}
-          compiled={this.state.compiled}
           optimiser={this.optimise}
           message={this.state.message}
           />

@@ -151,8 +151,8 @@ class EditorPublisher
         // Update record.
         tappRef.update({
           name: 'My First Tapp',
-          code: this.props.code,
-          source: this.props.source,
+          code: this.props.app.code,
+          source: this.props.app.source,
           owner: Firebase.auth().currentUser.uid,
         })
       } catch (error) {
@@ -322,7 +322,6 @@ class EditorPublisher
         </Paper>
       )
     }
-
   }
 
   export default EditorPublisher
