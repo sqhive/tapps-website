@@ -14,8 +14,8 @@
 </head>
 <body>
   <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    {% include 'partials/nav.html' %}
     <main class="mdl-layout__content">
-      {% include 'partials/nav.html' %}
       <div class="page-content">
         {% block content %}{% endblock %}
       </div>
