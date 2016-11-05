@@ -27,11 +27,16 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 class EditorPublisher
   extends Component {
 
+    /**
+     * Default constructor.
+     */
     constructor(props) {
       super(props)
+      // Initial state.
       this.state = {
         token: null,
         user: null,
+        isLoggedIn: false,
         myTapps: [],
         currentTapp: null,
         currentView: 0,
@@ -72,6 +77,10 @@ class EditorPublisher
       this.tappsRef.off()
     }
 
+    /**
+     * Initialise Firebase authentication.
+     * @return {[type]} [description]
+     */
     initAuth = () => {
       Firebase.auth().getRedirectResult().then((result) => {
         if (result.credential) {
@@ -85,16 +94,16 @@ class EditorPublisher
       })
 
       Firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-          this.setState({
-            user: user
-          })
-        } else {
-          this.openErrorDialog('User is signed out.')
-        }
+        this.setState({
+          user: user || null
+        })
       })
     }
 
+    /**
+     * Redirect to login.
+     * @return {[type]} [description]
+     */
     proceedLogin = () => {
       let provider = new Firebase.auth.GoogleAuthProvider()
       provider.addScope('https://www.googleapis.com/auth/plus.login')
@@ -109,12 +118,21 @@ class EditorPublisher
       return false
     }
 
+    logOut = () => {
+      Firebase.auth().signOut()
+    }
+
+    /**
+     * Create a new Tapp.
+     */
     addTapp = () => {
       // Check if user is logged in.
       if (this.checkLogin()) return
       // Publish the Tapp.
       try {
+        // Obtain a reference.
         let tappRef = this.tappsRef.child(this.state.currentTapp)
+        // Update record.
         tappRef.update({
           name: 'My First Tapp',
           code: this.props.code
@@ -124,16 +142,18 @@ class EditorPublisher
       }
     }
 
+    /**
+     * Update a Tapp.
+     * @return {[type]} [description]
+     */
     updateTapp = () => {
 
     }
 
 
-
     /**
      * Handlers
      */
-
      changeView = (event, index, value) => {
        this.setState({
          currentTapp: this.state.myTapps[value],
@@ -176,79 +196,88 @@ class EditorPublisher
       })
     }
 
+    /**
+     * Render the component.
+     */
     render() {
       return (
-        <MuiThemeProvider>
-          <Paper zDepth={1}>
-            <Toolbar>
-              <ToolbarGroup firstChild={true}>
-                <DropDownMenu autoWidth={false} value={this.state.currentView} onChange={this.changeView}>
-                  {this.state.myTapps.map((o, i) => {
-                      return <MenuItem key={i} value={i} primaryText={o} />
-                    }
-                  )}
-                  <Divider/>
-                  <MenuItem primaryText="Create New Tapp" />
-                </DropDownMenu>
-              </ToolbarGroup>
-              <ToolbarGroup>
-                <FontIcon className="material-icons" onTouchTap={() => {this.props.nav(0)}}>code</FontIcon>
-                <FontIcon className="material-icons" onTouchTap={() => {this.props.nav(1)}}>settings</FontIcon>
-                <FontIcon className="material-icons">delete</FontIcon>
-                <ToolbarSeparator />
-                { (this.state.user) ?
-                <Avatar style={{margin: '8px 0 0 24px'}} src={this.state.user.photoURL} />
-                : null
-                }
-                <RaisedButton label="Publish" primary={true} onTouchTap={this.onPublish} />
-                <IconMenu
-                  iconButtonElement={
-                    <IconButton touch={true}><MoreVertIcon /></IconButton>
+        <Paper zDepth={1}>
+          <Toolbar>
+            <ToolbarGroup firstChild={true}>
+              <DropDownMenu autoWidth={false} value={this.state.currentView} onChange={this.changeView}>
+                {this.state.myTapps.map((o, i) => {
+                    return <MenuItem key={i} value={i} primaryText={o} />
                   }
-                  anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-                  targetOrigin={{horizontal: 'right', vertical: 'top'}}
-                >
-                  <MenuItem primaryText="Terms & Conditions" />
-                  <MenuItem primaryText="Help" />
-                </IconMenu>
-              </ToolbarGroup>
-            </Toolbar>
-            <Dialog
-              title="Login Required"
-              actions={[
-                <FlatButton
-                  label="Cancel"
-                  primary={true}
-                  keyboardFocused={true}
-                  onTouchTap={this.closeLoginDialog}
-                />,
-                <FlatButton
-                  label="Login"
-                  primary={true}
-                  keyboardFocused={true}
-                  onTouchTap={this.proceedLogin}
-                />
-              ]}
-              modal={true}
-              open={this.state.loginDialog} >
-              You need to log-in before you can publish a Tapp.
-            </Dialog>
-            <Dialog
-              title="Error"
-              actions={
-                <FlatButton
-                  label="Okay"
-                  primary={true}
-                  keyboardFocused={true}
-                  onTouchTap={this.closeErrorDialog}
-                />
+                )}
+                <Divider/>
+                <MenuItem primaryText="Create New Tapp" />
+              </DropDownMenu>
+            </ToolbarGroup>
+            <ToolbarGroup>
+              <FontIcon className="material-icons" onTouchTap={() => {this.props.nav(0)}}>code</FontIcon>
+              { (this.state.user) ?
+              <FontIcon className="material-icons" onTouchTap={() => {this.props.nav(1)}}>settings</FontIcon>
+              : null
               }
-              modal={false}
-              open={this.state.errorDialog} >
-              {this.state.errorMessage}
-            </Dialog>
-          </Paper>
-        </MuiThemeProvider>
+              { (this.state.user) ?
+              <FontIcon className="material-icons">delete</FontIcon>
+              : null
+              }
+              <ToolbarSeparator />
+              { (this.state.user) ?
+              <Avatar style={{margin: '8px 0 0 24px'}} src={this.state.user.photoURL} />
+              : null
+              }
+              <RaisedButton label="Publish" primary={true} onTouchTap={this.onPublish} />
+              <IconMenu
+                iconButtonElement={
+                  <IconButton touch={true}><MoreVertIcon /></IconButton>
+                }
+                anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+                targetOrigin={{horizontal: 'right', vertical: 'top'}}
+              >
+                <MenuItem primaryText="Sign out" onTouchTap={this.logOut}  />
+                <Divider />
+                <MenuItem primaryText="Terms & Conditions" />
+                <MenuItem primaryText="Help" />
+              </IconMenu>
+            </ToolbarGroup>
+          </Toolbar>
+          <Dialog
+            title="Login Required"
+            actions={[
+              <FlatButton
+                label="Cancel"
+                primary={true}
+                keyboardFocused={true}
+                onTouchTap={this.closeLoginDialog}
+              />,
+              <FlatButton
+                label="Login"
+                primary={true}
+                keyboardFocused={true}
+                onTouchTap={this.proceedLogin}
+              />
+            ]}
+            modal={true}
+            open={this.state.loginDialog} >
+            You need to log-in before you can publish a Tapp.
+          </Dialog>
+          <Dialog
+            title="Error"
+            actions={
+              <FlatButton
+                label="Okay"
+                primary={true}
+                keyboardFocused={true}
+                onTouchTap={this.closeErrorDialog}
+              />
+            }
+            modal={false}
+            open={this.state.errorDialog} >
+            {this.state.errorMessage}
+          </Dialog>
+        </Paper>
       )
     }
 

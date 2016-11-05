@@ -86,15 +86,13 @@ class EditorView
 
   render() {
     return (
-      <MuiThemeProvider>
-        <Paper zDepth={1}>
-          <div id="editor"></div>
-          <div style={{marginTop: 1}}/>
-          <FlatButton label="Settings" />
-          <FlatButton style={{float: 'right'}} onTouchTap={this.toggleDebugger} label="Debugger" />
-          <FlatButton style={{float: 'right'}} onTouchTap={this.toggleDrawer} label="Examples" secondary={true} />
-        </Paper>
-      </MuiThemeProvider>
+      <Paper zDepth={1}>
+        <div id="editor"></div>
+        <div style={{marginTop: 1}}/>
+        <FlatButton label="Settings" />
+        <FlatButton style={{float: 'right'}} onTouchTap={this.toggleDebugger} label="Debugger" />
+        <FlatButton style={{float: 'right'}} onTouchTap={this.toggleDrawer} label="Examples" secondary={true} />
+      </Paper>
     )
   }
 }
