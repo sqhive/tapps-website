@@ -43,8 +43,13 @@ class EditorDrawer
   }
 
   handleLoad = (array, id:number) => {
-    this.props.updater(array[id].src)
-    this.props.toggle()
+    var $ = require('jQuery')
+    $.get(array[id].src, (code) => {
+      this.props.onUpdate({
+        source: code
+      })
+      this.props.toggle()
+    })
   }
 
   render() {

@@ -29,6 +29,7 @@ class Editor
       publish: null,
       openDrawer: false,
       openDebugger: false,
+      content: null,
     }
   }
 
@@ -50,20 +51,55 @@ class Editor
     })
   }
 
+  updateView = (content) => {
+    this.setState({
+      content: content
+    })
+  }
+
+  /**
+   * Toggle EditorDrawer open state.
+   */
+  toggleDrawer = () => {
+    this.setState({
+      openDrawer: !this.state.openDrawer
+    })
+  }
+
+  /**
+   * Toggle EditorDebugger open state.
+   */
+  toggleDebugger = () => {
+    this.setState({
+      openDebugger: !this.state.openDebugger
+    })
+  }
+
+  /**
+   * Render the component.
+   */
   render() {
     return (
       <MuiThemeProvider>
         <div className="mdl-grid" style={{maxWidth: '85%'}}>
           <div className="mdl-cell mdl-cell--8-col">
-            <EditorPublisher nav={this.handleNavigation} code={this.state.compiled} />
+            <EditorPublisher
+              onUpdate={this.updateView}
+              nav={this.handleNavigation}
+              code={this.state.compiled}
+              source={this.state.compilerSource} />
             <SwipeableViews index={this.state.slideIndex}>
-              <EditorView onUpdate={this.handleUpdate} />
+              <EditorView
+                onUpdate={this.handleUpdate}
+                content={this.state.content}
+                toggleDebugger={this.toggleDebugger}
+                toggleDrawer={this.toggleDrawer} />
               <EditorSettings />
             </SwipeableViews>
           </div>
           <div className="mdl-cell mdl-cell--4-col">
             <EditorCompiler source={this.state.compilerSource} onCompile={this.handleCompile} />
-            <EditorDrawer open={this.state.openDrawer} toggle={this.toggleDrawer} updater={this.onUpdate} />
+            <EditorDrawer open={this.state.openDrawer} toggle={this.toggleDrawer} onUpdate={this.updateView} />
             <EditorDebugger open={this.state.openDebugger} />
           </div>
         </div>

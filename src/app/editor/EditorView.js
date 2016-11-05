@@ -23,8 +23,6 @@ class EditorView
     this.state = {
       currentView: 1,
       timeout: null,
-      openDrawer: false,
-      openDebugger: false,
     }
   }
 
@@ -48,6 +46,40 @@ class EditorView
 
   }
 
+  /**
+   * Check if component needs updating.
+   */
+  shouldComponentUpdate(nextProps) {
+    if (this.props.content) {
+      return this.props.content != nextProps.content
+    }
+    return true
+  }
+
+  /**
+   * Update editor value with new props.
+   */
+  componentWillUpdate(nextProps, nextState) {
+    // If content is provided, update.
+    if (nextProps.content) {
+      this.setValue(nextProps.content.source)
+    }
+  }
+
+  setValue = (value) => {
+    this.editor.setValue(value);
+    this.editor.moveCursorToPosition({row: 0, column: 0});
+
+    var $ = require('jQuery')
+    $('html, body').animate({
+      scrollTop: 0
+    }, 2000)
+  }
+
+  /**
+   * Event handlers
+   */
+
   onChange = () => {
     clearTimeout(this.timeout)
     this.timeout = setTimeout(() => {
@@ -55,43 +87,17 @@ class EditorView
     }, 500)
   }
 
-  onUpdate = (src) => {
-    var $ = require('jQuery')
-    $.get(src, (data) => {
-      this.editor.setValue(data);
-      this.editor.moveCursorToPosition({row: 0, column: 0});
-    })
-    $('html, body').animate({
-      scrollTop: 0
-    }, 2000)
-  }
-
   /**
-   * Toggle EditorDrawer open state.
+   * Render the component.
    */
-  toggleDrawer = () => {
-    this.setState({
-      openDrawer: !this.state.openDrawer
-    })
-  }
-
-  /**
-   * Toggle EditorDebugger open state.
-   */
-  toggleDebugger = () => {
-    this.setState({
-      openDebugger: !this.state.openDebugger
-    })
-  }
-
   render() {
     return (
       <Paper zDepth={1}>
         <div id="editor"></div>
-        <div style={{marginTop: 1}}/>
+        <div style={{marginTop: 1}} />
         <FlatButton label="Settings" />
-        <FlatButton style={{float: 'right'}} onTouchTap={this.toggleDebugger} label="Debugger" />
-        <FlatButton style={{float: 'right'}} onTouchTap={this.toggleDrawer} label="Examples" secondary={true} />
+        <FlatButton style={{float: 'right'}} onTouchTap={this.props.toggleDebugger} label="Debugger" />
+        <FlatButton style={{float: 'right'}} onTouchTap={this.props.toggleDrawer} label="Examples" secondary={true} />
       </Paper>
     )
   }

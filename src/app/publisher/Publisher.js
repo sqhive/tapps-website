@@ -135,7 +135,8 @@ class EditorPublisher
         // Update record.
         tappRef.update({
           name: 'My First Tapp',
-          code: this.props.code
+          code: this.props.code,
+          source: this.props.source,
         })
       } catch (error) {
         this.openErrorDialog(error.message)
@@ -159,6 +160,11 @@ class EditorPublisher
          currentTapp: this.state.myTapps[value],
          currentView: value
        })
+
+      this.tappsRef.child(this.state.myTapps[value]).once('value', (snapshot) => {
+        this.props.onUpdate(snapshot.val());
+      })
+
      }
 
      onPublish = () => {
