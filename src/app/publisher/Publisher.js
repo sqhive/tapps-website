@@ -15,6 +15,7 @@ import MenuItem from 'material-ui/MenuItem'
 import Paper from 'material-ui/Paper'
 import Dialog from 'material-ui/Dialog'
 import Divider from 'material-ui/Divider'
+import Snackbar from 'material-ui/Snackbar'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
 
@@ -40,6 +41,9 @@ class EditorPublisher
         myTapps: [],
         currentTapp: null,
         currentView: 0,
+
+        snackOpen: false,
+        snackMessage: '',
         loginDialog: false,
         errorDialog: false,
       }
@@ -151,9 +155,12 @@ class EditorPublisher
         // Update record.
         tappRef.update({
           name: 'My First Tapp',
-          code: this.props.app.code,
+          compiled: this.props.app.compiled,
           source: this.props.app.source,
           owner: Firebase.auth().currentUser.uid,
+        }).then(() => {
+          // Show a success message.
+          this.toggleSnack('Yay! Your Tapp has been published, having compiled size of ' + this.props.app.compiled.length + ' bytes!')
         })
       } catch (error) {
         this.openErrorDialog(error.message)
@@ -205,6 +212,14 @@ class EditorPublisher
 
      onPublish = () => {
        this.updateTapp()
+     }
+
+
+     toggleSnack = (message) => {
+       this.setState({
+         snackMessage: message,
+         snackOpen: !this.state.snackOpen,
+       })
      }
 
     /**
@@ -319,6 +334,12 @@ class EditorPublisher
             open={this.state.errorDialog} >
             {this.state.errorMessage}
           </Dialog>
+          <Snackbar
+            open={this.state.snackOpen}
+            message={this.state.snackMessage}
+            autoHideDuration={4000}
+            onRequestClose={this.toggleSnack}
+          />
         </Paper>
       )
     }

@@ -1,0 +1,94 @@
+/**
+ * Encrypter
+ */
+
+ const paperStyle = {
+     width: '50px',
+     height: '50px',
+     padding: '20px',
+     margin: '1%',
+     float: 'left'
+ }
+
+ // Default message to encrypt.
+ let message = 'Hello World.'
+
+ class App
+    extends React.Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            expanded: false,
+            message: message.replace(/[^a-z0-9]/gi, '').split(''),
+        }
+    }
+
+    componentDidMount() {
+
+    }
+
+    handleExpandChange = () => {
+
+    }
+
+    handleToggle = () => {
+
+    }
+
+    handleEncrypt = () => {
+        // Encrypt message.
+        var newMessage = []
+        this.state.message.forEach(char => {
+            newMessage.push(String.fromCharCode(
+                char.charCodeAt(0) + 1
+            ))
+        })
+        // Update the message.
+        this.setState({
+            message: newMessage
+        })
+    }
+
+    handleDecrypt = () => {
+
+    }
+
+    render() {
+        return (
+            <Card
+                expanded={this.state.expanded}
+                onExpandChange={this.handleExpandChange}>
+
+                <CardHeader
+                  title="Encrypter"
+                  subtitle="Perform simple XOR encryption"
+                  actAsExpander={false}
+                  showExpandableButton={false}
+                />
+
+                <CardText>
+                    <div>
+                    {
+                        this.state
+                            .message
+                            .map((o, i) => {
+                                return (
+                                <Paper style={paperStyle}>
+                                    {o.toUpperCase()}
+                                </Paper>
+                                )
+                            })
+                    }
+                    </div>
+                    <div style={{clear: 'both'}}></div>
+                </CardText>
+
+                <CardActions>
+                  <FlatButton label="Encrypt" onTouchTap={this.handleEncrypt} />
+                  <FlatButton label="Decrypt" onTouchTap={this.handleDecrypt} />
+                </CardActions>
+            </Card>
+        )
+    }
+ }
