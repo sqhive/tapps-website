@@ -38,7 +38,7 @@ class EditorView
     });
     this.editor.setTheme('ace/theme/chrome')
     this.editor.getSession().setMode('ace/mode/jsx')
-    this.editor.setValue('working')
+    this.editor.setValue('...')
 
     this.editor.on('change', this.onChange)
 

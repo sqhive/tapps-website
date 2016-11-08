@@ -4,7 +4,6 @@
  * Class object for seralisation.
  */
 class Tapp {
-
     /**
      * Default constructor
      */
@@ -12,7 +11,7 @@ class Tapp {
       this.key = key
       this.owner = owner
       this.source = source
-      this.compiled = compiled
+      this.compiled = compiled || ''
     }
 
 }

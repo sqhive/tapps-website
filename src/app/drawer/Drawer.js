@@ -7,6 +7,8 @@
 
 import React, {Component} from 'react'
 
+import Tapp from '../core'
+
 import Drawer from 'material-ui/Drawer'
 import Subheader from 'material-ui/Subheader'
 import {List, ListItem} from 'material-ui/List'
@@ -45,9 +47,12 @@ class EditorDrawer
   handleLoad = (array, id:number) => {
     var $ = require('jQuery')
     $.get(array[id].src, (code) => {
-      this.props.onUpdate({
-        source: code
-      })
+      this.props.onUpdate(new Tapp(
+        null,
+        null,
+        code,
+        null
+      ))
       this.props.toggle()
     })
   }

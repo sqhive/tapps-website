@@ -35,17 +35,10 @@ class EditorCompiler
   }
 
   componentWillReceiveProps = (nextProps) => {
-    if (this.state.app !== nextProps.app) {
-      this.setState({
-        app: nextProps.app
-      })
-    }
-  }
-
-  componentDidUpdate = (prevProps, prevState) => {
-    if (this.state.app !== prevState.app) {
-      this.compile()
-    }
+    this.setState({
+      app: nextProps.app
+    })
+    this.compile(nextProps.app)
   }
 
   stringToByteArray(str) {
@@ -56,8 +49,8 @@ class EditorCompiler
   	return array
   }
 
-  compile = (src) => {
-    src = this.state.app.source
+  compile = (app) => {
+    let src = app.source
 
     let goog = require('goog'),
         Zlib = require('Zlib'),
@@ -78,16 +71,16 @@ class EditorCompiler
     let code = goog.crypt.base64.encodeByteArray(compressed)
 
     // Update this component's state.
-    this.setState(
-      update(this.state, {
-        app: {
-          compiled: {$set: code},
-        },
-        message: {$set: ''}
-      })
-    )
+    this.setState({
+      app: new Tapp(
+        app.key,
+        app.owner,
+        src,
+        code
+      )
+    })
     // Lift up updates.
-    this.props.onUpdate(this.state.app)
+    // this.props.onUpdate(this.state.app)
   }
 
   optimise = () => {

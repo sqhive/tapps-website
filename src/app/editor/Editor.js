@@ -69,7 +69,7 @@ class Editor
     return (
       <MuiThemeProvider>
         <div className="mdl-grid" style={{maxWidth: '85%'}}>
-          <div className="mdl-cell mdl-cell--8-col mdl-cell--8-col-tablet">
+          <div className="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet">
             <EditorPublisher
               app={this.state.app}
               nav={this.handleNavigation}
@@ -83,11 +83,11 @@ class Editor
               <EditorSettings />
             </SwipeableViews>
           </div>
-          <div className="mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet">
+          <div className="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet">
             <EditorCompiler
               app={this.state.app}
               onUpdate={this.updateApp} />
-            <EditorDrawer open={this.state.openDrawer} toggle={this.toggleDrawer} onUpdate={this.updateView} />
+            <EditorDrawer open={this.state.openDrawer} toggle={this.toggleDrawer} onUpdate={this.updateApp} />
             <EditorDebugger open={this.state.openDebugger} />
           </div>
         </div>

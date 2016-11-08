@@ -20,8 +20,8 @@ import LinearProgress from 'material-ui/LinearProgress';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 const style = {
-  width: 300,
-  minHeight: 300,
+  width: 500,
+  minHeight: 500,
   textAlign: 'center',
   display: 'inline-block',
 };
@@ -49,7 +49,7 @@ class EditorCompilerView
 
     $('#code').html('').qrcode({
 			'ecLevel': 'L',
-			'size': 300,
+			'size': 500,
       'fill': '#00BCD4',
 			'text': props.app.compiled
 		});
